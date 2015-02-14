@@ -37,6 +37,7 @@ public class KneeSideSurfaceView extends SurfaceView implements SurfaceHolder.Ca
 	private float last_z;
 	private final long SHAKE_THRESHOLD = 600;
 	private float speed ;
+	private int MAX_LENGHT ;
 	
 	//SurfaceView size
 	int width ;
@@ -69,9 +70,9 @@ public class KneeSideSurfaceView extends SurfaceView implements SurfaceHolder.Ca
 		Log.d(TAG, "Knee Side Surface created ");
 		
 		/*
-		 * retrieve display measurements 		
+		 * assign the maximum length for thigh and femur 
 		 */
-		
+		MAX_LENGHT = getDistance(0, 0, getWidth()/2, getHeight()/2);
 		
 		UpdateThread thread = new UpdateThread(); 
 		thread.start();
@@ -105,14 +106,29 @@ public class KneeSideSurfaceView extends SurfaceView implements SurfaceHolder.Ca
 		
 		Paint knee_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		knee_paint.setColor(Color.YELLOW);
-		knee_paint.setStrokeWidth(255);
+		knee_paint.setStrokeWidth(200);
 		
 		width = canvas.getWidth();
 		height = canvas.getHeight();
 		
-		canvas.drawCircle(canvas.getWidth()/2, canvas.getHeight()/2 , canvas.getHeight()/canvas.getWidth() * 40, knee_paint);		
+		//set the joints
+		Point thigh = new Point(100, calculateThighY(canvas.getWidth()/2 ));
+		Point knee = new Point (calculateKneeX(canvas.getWidth()/2), canvas.getHeight()/2 );
+		Point foot = new Point(100 + 30 ,Math.round(canvas.getHeight() - 300 + ((-1)* (0.5f) * (calculateThighY(canvas.getWidth())/2))));
+		
+		
+		canvas.drawCircle(thigh.x ,thigh.y , canvas.getHeight()/canvas.getWidth() * 40, knee_paint);
+		canvas.drawCircle(knee.x , knee.y , canvas.getHeight()/canvas.getWidth() * 40, knee_paint);
+		
+		
+		//set the lines between joints
+		canvas.drawLine(thigh.x, thigh.y,knee.x,knee.y,knee_paint); //line between thigh and knee
+		canvas.drawLine(knee.x , knee.y ,foot.x , foot.y ,knee_paint); //line betweek knee and foot
+		
 		Paint text_paint = new Paint();
 		text_paint.setTextSize(125f);
+		
+		
 				
 		canvas.drawText("X = "+last_x , 50, 100,text_paint);
 		canvas.drawText("Y = "+last_y, 50, 300,text_paint);
@@ -131,7 +147,7 @@ public class KneeSideSurfaceView extends SurfaceView implements SurfaceHolder.Ca
 			last_z = event.values[2];
 			
 			current = System.currentTimeMillis();
-			if(current - lastUpdate > 500){
+			if(current - lastUpdate > 2){
 				lastUpdate = current ;
 				calculateOffset(event.values[1]);
 			}
@@ -144,21 +160,43 @@ public class KneeSideSurfaceView extends SurfaceView implements SurfaceHolder.Ca
 		// TODO Auto-generated method stub
 		
 	}
+	
 
 	public void setRunning(Boolean value){
 		this.running = value ;
 	}
 	
+	private int getDistance(int startX , int startY , int stopX , int stopY){
+		return (int)Math.abs( Math.round( Math.sqrt(Math.pow(stopX - startX, 2) + Math.pow(stopY - stopX,2 ))));
+	}
 	
 	private int calculateOffset(float angle){
 		if(angle > 90)
-			angle = 90; 
+			angle = 60; 
 		else if(angle < -90)
-			angle = -90;
+			angle = -60;
 		
 		int percent_meu = Math.round((angle * 100)/90) ; // reprezinta cu cat % trebuie sa misc coapsa mai sus sau mai jos 
 		offset =(-1) * percent_meu;  //offset-ul cu care trebuie sa mut coapsa mai sus si genunchiul mai la stanga
 		return offset ;
+	}
+	
+	private Point moveHorizontal(Point p, int value){
+		p.x += value ;
+		return p ;
+	}
+	
+	private Point moveVertical(Point p  , int value ){
+		p.y += value ; 
+		return p ;
+	}
+	
+	private int calculateKneeX(int width){
+		return (width) + (offset * width)/100; // offset percent of canvas/2 width 
+	}
+	
+	private int calculateThighY(int height){
+		return height + (offset * height)/100; //offset percent of canvas/2 height
 	}
 
 
@@ -174,7 +212,7 @@ public class KneeSideSurfaceView extends SurfaceView implements SurfaceHolder.Ca
 				holder.unlockCanvasAndPost(c);
 
 				try{
-					Thread.sleep(1000);
+					Thread.sleep(1);
 				}catch(InterruptedException e){
 					Log.e(TAG, "Error at knee side update thread ");
 				}
