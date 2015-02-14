@@ -34,25 +34,9 @@ public class Main extends Activity {
         final KneeSideSurfaceView knee_surface = new KneeSideSurfaceView(Main.this);
         knee_surface.setRunning(running);
         
-        
-        final ArrayList<Point> points = new ArrayList<Point>();
         /*
-         * Points for test purposes
+         * Just to test the canvas 
          */
-        for (int i = 0 ; i < 10 ; i++){
-        	Point aux = new Point(i * 100 ,0);
-        	aux.y = i * 100 + 20  ;
-        	points.add(aux);
-        
-        }
-
-		for (Point p : points){
-			
-			knee_surface.setKneePoint(p);
-			knee_surface.invalidate();
-			knee_surface.logPosition();
-			
-		}
 
         
         /*
