@@ -7,10 +7,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.eskimo.data.Point;
-import com.eskimo.views.KneePreviewSide;
+import com.eskimo.views.KneeSideSurfaceView;
 
 
 public class Main extends Activity {
@@ -25,7 +26,7 @@ public class Main extends Activity {
         /*
          * The sideways custom view
          */
-        final KneePreviewSide knee_view = new KneePreviewSide(Main.this);
+        final KneeSideSurfaceView knee_surface = new KneeSideSurfaceView(Main.this);
         
         
         final ArrayList<Point> points = new ArrayList<Point>();
@@ -33,42 +34,37 @@ public class Main extends Activity {
          * Points for test purposes
          */
         for (int i = 0 ; i < 10 ; i++){
-        	Point aux = new Point(i,0);
-        	aux.y = i + 20 ;
+        	Point aux = new Point(i * 100 ,0);
+        	aux.y = i * 100 + 20  ;
         	points.add(aux);
         
         }
-        
-        
-        Thread update_side = new Thread(new Runnable() {
+
+		for (Point p : points){
 			
-			@Override
-			public void run() {
-				try{
+			knee_surface.setKneePoint(p);
+			knee_surface.invalidate();
+			knee_surface.logPosition();
+			
+		}
+
+        
+       
 					
-					for (Point p : points){
-						
-						knee_view.setKneePoint(p);
-						knee_view.invalidate();
-						knee_view.logPosition();
-						Thread.sleep(1000);
-						
-					}
-					
-				}catch(InterruptedException e){
-					Log.e(TAG,"Sideways knee view thread  interrupted ") ;
-				}
-				
-			}
-		});
+	
         
         /*
          * Add the side view to the layout
          */
         LinearLayout main_layout = (LinearLayout)findViewById(R.id.linearLayout);
         LinearLayout.LayoutParams side_params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT , LinearLayout.LayoutParams.MATCH_PARENT);
-        knee_view.setLayoutParams(side_params);
-        main_layout.addView(knee_view);
+        knee_surface.setLayoutParams(side_params);
+        main_layout.addView(knee_surface);
+//        
+//        ImageView view = new ImageView(Main.this);
+//        view.setBackgroundResource(com.eskimo.eskimo.R.drawable.ic_launcher);
+//        view.setLayoutParams(side_params);
+//        main_layout.addView(view);
         
         
     }
