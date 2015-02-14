@@ -16,17 +16,23 @@ import com.eskimo.views.KneeSideSurfaceView;
 
 public class Main extends Activity {
 	
+	private volatile Boolean running ; 
+	
 	public static final String TAG = "MAINACTIVITY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        this.running = new Boolean(true);
+        
         setContentView(R.layout.activity_main);
         
         /*
          * The sideways custom view
          */
         final KneeSideSurfaceView knee_surface = new KneeSideSurfaceView(Main.this);
+        knee_surface.setRunning(running);
         
         
         final ArrayList<Point> points = new ArrayList<Point>();
@@ -49,10 +55,6 @@ public class Main extends Activity {
 		}
 
         
-       
-					
-	
-        
         /*
          * Add the side view to the layout
          */
@@ -60,11 +62,6 @@ public class Main extends Activity {
         LinearLayout.LayoutParams side_params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT , LinearLayout.LayoutParams.MATCH_PARENT);
         knee_surface.setLayoutParams(side_params);
         main_layout.addView(knee_surface);
-//        
-//        ImageView view = new ImageView(Main.this);
-//        view.setBackgroundResource(com.eskimo.eskimo.R.drawable.ic_launcher);
-//        view.setLayoutParams(side_params);
-//        main_layout.addView(view);
         
         
     }

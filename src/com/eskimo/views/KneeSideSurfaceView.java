@@ -19,6 +19,7 @@ public class KneeSideSurfaceView extends SurfaceView implements SurfaceHolder.Ca
 	private Context context ;
 	private Point knee;  
 	private SurfaceHolder holder ;
+	Boolean running ;
 	
 	public KneeSideSurfaceView(Context context) {
 		super(context);
@@ -33,9 +34,9 @@ public class KneeSideSurfaceView extends SurfaceView implements SurfaceHolder.Ca
 	public void surfaceCreated(SurfaceHolder holder) {
 		Log.d(TAG, "Knee Side Surface created ");
 		
-		Canvas c = holder.lockCanvas(null);
-		onDraw(c);
-		holder.unlockCanvasAndPost(c);
+				
+		UpdateThread thread = new UpdateThread(); 
+		thread.start();
 		
 	}
 
@@ -55,6 +56,7 @@ public class KneeSideSurfaceView extends SurfaceView implements SurfaceHolder.Ca
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
+		
 		Random r =new Random();
 		
 		canvas.drawARGB(255, 255, 0, 0);
@@ -76,4 +78,33 @@ public class KneeSideSurfaceView extends SurfaceView implements SurfaceHolder.Ca
 		Log.d(TAG, "Knee x position is "+knee.x  + " and y is "+knee.y);
 	}
 
+	public void setRunning(Boolean value){
+		this.running = value ;
+	}
+	
+	
+	private class UpdateThread extends Thread{
+	
+		@Override
+		public void run() {
+			while(running){
+				Log.d(TAG,"Knee side thread Running");
+				
+				Canvas c = holder.lockCanvas(null);
+				onDraw(c);
+				holder.unlockCanvasAndPost(c);
+
+				try{
+					Thread.sleep(1500);
+				}catch(InterruptedException e){
+					Log.e(TAG, "Error at knee side update thread ");
+				}
+			}
+			super.run();
+		}
+		
+		
+		
+	}
+	
 }
