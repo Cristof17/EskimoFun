@@ -6,10 +6,13 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.eskimo.display.DisplayMeasurements;
 import com.eskimo.sensors.SensorsUtils;
@@ -17,11 +20,12 @@ import com.eskimo.views.CustomSeekBar;
 import com.eskimo.views.RecordingButton;
 
 
-public class RecordActivity extends Activity implements SensorEventListener{
+public class RecordActivity extends Activity implements SensorEventListener , OnClickListener{
 
 	private CustomSeekBar bar ;
 	private SensorsUtils utils ;
 	private TextView text;
+	private boolean recording ;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,7 @@ public class RecordActivity extends Activity implements SensorEventListener{
 		recordButton.setBackgroundResource(R.drawable.sign_in_button);
 		recordButton.setTextColor(Color.WHITE);
 		recordButton.setTextSize(30f);
+		recordButton.setOnClickListener(this);
 		
 		bar = new CustomSeekBar(RecordActivity.this,null ,android.R.attr.progressBarStyleHorizontal);
 		bar.setMax(100);
@@ -77,6 +82,23 @@ public class RecordActivity extends Activity implements SensorEventListener{
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void onClick(View v) {
+		if(v instanceof Button){
+			if(!recording){
+				v.setBackgroundColor(Color.RED);
+				((Button)v).setText("Stop Recording");
+				recording = true ;
+				Toast.makeText(getApplicationContext(), "Recording descend", Toast.LENGTH_SHORT).show();
+			}else{
+				((Button)v).setText("Start Recording");
+				v.setBackgroundResource(R.drawable.sign_in_button);
+				recording = false;
+				Toast.makeText(getApplicationContext(), "Recording stopped ", Toast.LENGTH_SHORT).show();
+			}
+		}
 	}
 
 	
