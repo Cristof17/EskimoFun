@@ -13,6 +13,8 @@ import com.eskimo.views.KneeSideSurfaceView;
 public class Main extends Activity {
 	
 	private volatile Boolean running ;
+	public static int screenWidth ;
+	public static int screenHeight ;
 	
 	public static final String TAG = "MAINACTIVITY";
 	
@@ -20,6 +22,9 @@ public class Main extends Activity {
     	running = new Boolean(true);
     	setContentView(R.layout.activity_main);
     	super.onCreate(savedInstanceState);
+    	
+    	screenWidth = getScreenWidth(this);
+    	screenHeight = getScreenHeight(this);
     	
     	LinearLayout layout = (LinearLayout)findViewById(R.id.linearLayout);
     	LinearLayout.LayoutParams surface_view_params =new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT , convertPixelsToDp(1920));
@@ -35,14 +40,14 @@ public class Main extends Activity {
    	}
     
     
-    private int getScreenHeight(){
-    	WindowManager wm  = (WindowManager)getSystemService(Context.WINDOW_SERVICE);
+    private static int getScreenHeight(Context context){
+    	WindowManager wm  = (WindowManager)context.  getSystemService(Context.WINDOW_SERVICE);
     	return wm.getDefaultDisplay().getHeight();
     	
     }
     
-    private int getScreenWidth(){
-    	WindowManager wm  = (WindowManager)getSystemService(Context.WINDOW_SERVICE);
+    private static int getScreenWidth(Context context){
+    	WindowManager wm  = (WindowManager)context .getSystemService(Context.WINDOW_SERVICE);
     	return wm.getDefaultDisplay().getWidth();
     	
     }
