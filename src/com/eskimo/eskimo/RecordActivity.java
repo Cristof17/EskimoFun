@@ -1,4 +1,6 @@
 package com.eskimo.eskimo;
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
@@ -6,6 +8,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
@@ -14,18 +17,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.eskimo.data.Record;
 import com.eskimo.display.DisplayMeasurements;
 import com.eskimo.sensors.SensorsUtils;
 import com.eskimo.views.CustomSeekBar;
-import com.eskimo.views.RecordingButton;
 
 
-public class RecordActivity extends Activity implements SensorEventListener , OnClickListener{
+public class RecordActivity extends Activity implements SensorEventListener , OnClickListener , Runnable{
 
 	private CustomSeekBar bar ;
 	private SensorsUtils utils ;
 	private TextView text;
 	private boolean recording ;
+	private Thread addingThread ; 
+	private ArrayList<Record> data ;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,8 @@ public class RecordActivity extends Activity implements SensorEventListener , On
 		setContentView(layout);
 		
 		this.utils = new SensorsUtils(this, this);
+		this.data = new ArrayList<Record>();
+		this.addingThread = new Thread(this);
 		
 		Button recordButton = new Button(RecordActivity.this);
 		recordButton.setText("Start Recording");
@@ -92,15 +99,50 @@ public class RecordActivity extends Activity implements SensorEventListener , On
 				((Button)v).setText("Stop Recording");
 				recording = true ;
 				Toast.makeText(getApplicationContext(), "Recording descend", Toast.LENGTH_SHORT).show();
+				addingThread.start();
 			}else{
 				((Button)v).setText("Start Recording");
 				v.setBackgroundResource(R.drawable.sign_in_button);
 				recording = false;
 				Toast.makeText(getApplicationContext(), "Recording stopped ", Toast.LENGTH_SHORT).show();
+				printRecords();
+				try {
+					addingThread.join();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 	}
 
+	@Override
+	public void run() {
+		
+		int contor = 0 ;
+		
+		while(recording){
+			
+			Record new_record = new Record();
+			new_record.setTime(contor);
+			new_record.setColor(SensorsUtils.whatColorShouldBe());
+			new_record.setOffset(SensorsUtils.offset);
+			new_record.setAngle(SensorsUtils.getAngle());
+			new_record.setSpeed(0);
+			data.add(new_record) ;
+			
+			try{
+				Thread.sleep(1000);
+			}catch(InterruptedException e ){
+				Log.e("RECORDINGACTIVITY", "Error at thread sleep");
+			}
+		}
+	}
 	
-	
+	public void printRecords(){
+		for(Record r : data){
+			Log.d("RECORDACTIVITY", r.getAngle() + " "+ r.getTime() + " "+ r.getAngle());
+		}
+	}
+
 }

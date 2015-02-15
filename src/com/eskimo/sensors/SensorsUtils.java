@@ -1,6 +1,7 @@
 package com.eskimo.sensors;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -13,6 +14,7 @@ public class SensorsUtils {
 	private  SensorEventListener listener;
 	private  long lastUpdate; 
 	public static  int offset ;
+	private static int angle ;
 	
 	public SensorsUtils(Context context ,SensorEventListener listener){
 		
@@ -33,6 +35,7 @@ public class SensorsUtils {
 			if(current - lastUpdate > 2){
 				lastUpdate = current ;
 				calculateOffset(event.values[2]);
+				angle = (int) event.values[2];
 			}
 		}
 		return offset; 
@@ -53,6 +56,19 @@ public class SensorsUtils {
 		return offset ;
 	}
 	
-	
+	public static int whatColorShouldBe(){
+		if((SensorsUtils.offset >= 0 && SensorsUtils.offset <= 25) || (SensorsUtils.offset < 0 && SensorsUtils.offset >= -25)){
+			return Color.GREEN;
+		}else if((SensorsUtils.offset > 25 && SensorsUtils.offset <= 50) || (SensorsUtils.offset < -25 && SensorsUtils.offset >= -50)){
+			return Color.YELLOW;
+		}if((SensorsUtils.offset > 50 && SensorsUtils.offset <= 100) || (SensorsUtils.offset < -50 && SensorsUtils.offset >= -100)){
+			return Color.RED;
+		}
+		
+		return Color.GREEN;
+	}
 
+	public static int getAngle(){
+		return angle ;
+	}
 }

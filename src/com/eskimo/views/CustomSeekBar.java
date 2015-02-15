@@ -61,7 +61,7 @@ public class CustomSeekBar extends SeekBar{
 		return ;
 	}
 	
-	private int whatColorShouldBe(){
+	public int whatColorShouldBe(){
 		if((SensorsUtils.offset >= 0 && SensorsUtils.offset <= 25) || (SensorsUtils.offset < 0 && SensorsUtils.offset >= -25)){
 			return Color.GREEN;
 		}else if((SensorsUtils.offset > 25 && SensorsUtils.offset <= 50) || (SensorsUtils.offset < -25 && SensorsUtils.offset >= -50)){
