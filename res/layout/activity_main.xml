@@ -2,8 +2,31 @@
      xmlns:android="http://schemas.android.com/apk/res/android"
      android:layout_width="match_parent"
      android:layout_height="match_parent"
-     android:orientation="vertical"
-     android:id="@+id/linearLayout">
+     android:id= "@+id/frameLayout"
+     android:orientation="vertical">
+     
+     <LinearLayout 
+         android:id="@+id/surfaceView"
+         android:layout_width="match_parent"
+         android:layout_height="300dp"
+         android:orientation="horizontal"/>
+
+     
     
+      <uk.co.chrisjenx.paralloid.views.ParallaxScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+            
+          <LinearLayout
+              android:id="@+id/textLayouts"
+              android:layout_height="match_parent"
+              android:layout_width="match_parent"
+              android:orientation="vertical">
+              
+          </LinearLayout>
+      </uk.co.chrisjenx.paralloid.views.ParallaxScrollView>
+   
     
 </LinearLayout>

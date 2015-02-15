@@ -1,13 +1,22 @@
 package com.eskimo.eskimo;
 
+import java.util.ArrayList;
+
+import uk.co.chrisjenx.paralloid.Parallaxor;
+import uk.co.chrisjenx.paralloid.views.ParallaxScrollView;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
+import android.widget.FrameLayout.LayoutParams;
 
+import com.eskimo.views.CustomSeekBar;
 import com.eskimo.views.KneeSideSurfaceView;
 
 public class Main extends Activity {
@@ -23,18 +32,37 @@ public class Main extends Activity {
     	setContentView(R.layout.activity_main);
     	super.onCreate(savedInstanceState);
     	
+    	
     	screenWidth = getScreenWidth(this);
     	screenHeight = getScreenHeight(this);
     	
-    	LinearLayout layout = (LinearLayout)findViewById(R.id.linearLayout);
-    	LinearLayout.LayoutParams surface_view_params =new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT , convertPixelsToDp(1920));
-    	KneeSideSurfaceView surfaceknee = new KneeSideSurfaceView(Main.this);
-    	surfaceknee.setLayoutParams(surface_view_params);
-    	layout.addView(surfaceknee);
+    	LinearLayout global = (LinearLayout)findViewById(R.id.textLayouts);
     	
-    	surfaceknee.setRunning(true);
+    	KneeSideSurfaceView surfaceView = new KneeSideSurfaceView(Main.this);
+    	LinearLayout surfaceLayout = (LinearLayout)findViewById(R.id.surfaceView);
+    	LinearLayout.LayoutParams surfaceParams = new LinearLayout.LayoutParams(
+    											LinearLayout.LayoutParams.MATCH_PARENT,
+    											LinearLayout.LayoutParams.MATCH_PARENT);
+    	surfaceView.setLayoutParams(surfaceParams);
+    	surfaceLayout.addView(surfaceView);
+    	
+ 
+    	ParallaxScrollView scrollView = (ParallaxScrollView)findViewById(R.id.scroll_view);
+    	
+    	CustomSeekBar progressBar = new CustomSeekBar(Main.this,null,android.R.attr.progressBarStyleHorizontal);
+    	
+    	LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
+    	
+    	progressBar.setMax(100);
+    	progressBar.setProgress(50);
+    	progressBar.setLayoutParams(params2);
+    	
+    	global.addView(progressBar);
     	
     	
+    	if(scrollView instanceof Parallaxor){
+    		((Parallaxor)scrollView).parallaxViewBy(surfaceView, 0.5f);
+    	}
    	}
     
     

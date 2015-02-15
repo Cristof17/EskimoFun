@@ -95,6 +95,9 @@ public class KneeSideSurfaceView extends SurfaceView implements SurfaceHolder.Ca
 		canvas = new Canvas(bitmap);
 		canvas.drawARGB(255, 255, 0, 0);
 		
+		
+		setRunning(true);
+		
 		/*
 		 * create and start the update thread 
 		 */

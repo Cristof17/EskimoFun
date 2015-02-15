@@ -1649,7 +1649,7 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f09002e;
         public static final int action_mode_bar_stub=0x7f09002d;
         public static final int action_mode_close_button=0x7f090020;
-        public static final int action_settings=0x7f090040;
+        public static final int action_settings=0x7f090043;
         public static final int activity_chooser_view_content=0x7f090021;
         public static final int always=0x7f090014;
         public static final int beginning=0x7f09001b;
@@ -1664,12 +1664,12 @@ containing a value of this type.
         public static final int end=0x7f09001c;
         public static final int expand_activities_button=0x7f090022;
         public static final int expanded_menu=0x7f090028;
+        public static final int frameLayout=0x7f09003f;
         public static final int home=0x7f090000;
         public static final int homeAsUp=0x7f09000e;
         public static final int icon=0x7f090026;
         public static final int ifRoom=0x7f090016;
         public static final int image=0x7f090023;
-        public static final int linearLayout=0x7f09003f;
         public static final int listMode=0x7f09000a;
         public static final int list_item=0x7f090025;
         public static final int middle=0x7f09001d;
@@ -1679,6 +1679,7 @@ containing a value of this type.
         public static final int progress_circular=0x7f090007;
         public static final int progress_horizontal=0x7f090008;
         public static final int radio=0x7f09002b;
+        public static final int scroll_view=0x7f090041;
         public static final int search_badge=0x7f090035;
         public static final int search_bar=0x7f090034;
         public static final int search_button=0x7f090036;
@@ -1695,7 +1696,9 @@ containing a value of this type.
         public static final int showTitle=0x7f090012;
         public static final int split_action_bar=0x7f090004;
         public static final int submit_area=0x7f09003c;
+        public static final int surfaceView=0x7f090040;
         public static final int tabMode=0x7f09000c;
+        public static final int textLayouts=0x7f090042;
         public static final int title=0x7f090027;
         public static final int up=0x7f090001;
         public static final int useLogo=0x7f090013;
@@ -1839,9 +1842,31 @@ containing a value of this type.
         res/values-v11/styles.xml on API 14+ devices.
     
  API 14 theme customizations can go here. 
+
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    
+
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        
+
+        Base application theme for API 11+. This theme completely replaces
+        AppBaseTheme from res/values/styles.xml on API 11+ devices.
+    
+ API 11 theme customizations can go here. 
+
+        Base application theme for API 14+. This theme completely replaces
+        AppBaseTheme from BOTH res/values/styles.xml and
+        res/values-v11/styles.xml on API 14+ devices.
+    
+ API 14 theme customizations can go here. 
          */
         public static final int AppBaseTheme=0x7f0b00eb;
         /**  Application theme. 
+ All customizations that are NOT specific to a particular API-level can go here. 
+ Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f0b00ec;
