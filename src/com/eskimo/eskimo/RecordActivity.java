@@ -101,6 +101,7 @@ public class RecordActivity extends Activity implements SensorEventListener , On
 				Toast.makeText(getApplicationContext(), "Recording descend", Toast.LENGTH_SHORT).show();
 				addingThread = new Thread(this);
 				addingThread.start();
+				data = new ArrayList<Record>();
 			}else{
 				((Button)v).setText("Start Recording");
 				v.setBackgroundResource(R.drawable.sign_in_button);
