@@ -35,8 +35,6 @@ public class Main extends Activity {
     	surfaceknee.setRunning(true);
     	
     	
-    	
-    	
    	}
     
     

@@ -10,5 +10,6 @@
 			<attribute name="javadoc_location" value="file:/home/cristof/Desktop/jpct-ae/doc/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/Library-Paralloid"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

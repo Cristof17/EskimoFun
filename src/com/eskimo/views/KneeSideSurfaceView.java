@@ -196,10 +196,10 @@ public class KneeSideSurfaceView extends SurfaceView implements SurfaceHolder.Ca
 	
 	private void checkChangeInDirection(){
 		
-		if((oldOffset < 0 && offset > 0) || oldOffset > 0 || offset < 0 ) {
-			change_done = false; //there was no change in direction
+		if((oldOffset < 0 && offset > 0) || ( oldOffset > 0 && offset < 0 )) {
+			change_done = false; //there was change in direction
 		}else {
-			change_done = true; //there was a change in direction
+			change_done = true; //there was no change in direction
 		}
 	}
 	
