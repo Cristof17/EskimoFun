@@ -99,6 +99,7 @@ public class RecordActivity extends Activity implements SensorEventListener , On
 				((Button)v).setText("Stop Recording");
 				recording = true ;
 				Toast.makeText(getApplicationContext(), "Recording descend", Toast.LENGTH_SHORT).show();
+				addingThread = new Thread(this);
 				addingThread.start();
 			}else{
 				((Button)v).setText("Start Recording");
@@ -130,7 +131,7 @@ public class RecordActivity extends Activity implements SensorEventListener , On
 			new_record.setAngle(SensorsUtils.getAngle());
 			new_record.setSpeed(0);
 			data.add(new_record) ;
-			
+			contor ++ ;
 			try{
 				Thread.sleep(1000);
 			}catch(InterruptedException e ){
@@ -141,7 +142,7 @@ public class RecordActivity extends Activity implements SensorEventListener , On
 	
 	public void printRecords(){
 		for(Record r : data){
-			Log.d("RECORDACTIVITY", r.getAngle() + " "+ r.getTime() + " "+ r.getAngle());
+			Log.d("RECORDACTIVITY","Results are " + r.getAngle() + " "+ r.getTime() + " "+ r.getAngle());
 		}
 	}
 
