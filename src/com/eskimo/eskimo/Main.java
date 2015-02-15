@@ -1,72 +1,57 @@
 package com.eskimo.eskimo;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
+import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.ImageView;
+import android.util.DisplayMetrics;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 
-import com.eskimo.data.Point;
 import com.eskimo.views.KneeSideSurfaceView;
-
 
 public class Main extends Activity {
 	
-	private volatile Boolean running ; 
+	private volatile Boolean running ;
 	
 	public static final String TAG = "MAINACTIVITY";
-
-    @Override
+	
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        
-        this.running = new Boolean(true);
-        
-        setContentView(R.layout.activity_main);
-        
-        /*
-         * The sideways custom view
-         */
-        final KneeSideSurfaceView knee_surface = new KneeSideSurfaceView(Main.this);
-        knee_surface.setRunning(running);
-        
-        /*
-         * Just to test the canvas 
-         */
-
-        
-        /*
-         * Add the side view to the layout
-         */
-        LinearLayout main_layout = (LinearLayout)findViewById(R.id.linearLayout);
-        LinearLayout.LayoutParams side_params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT , LinearLayout.LayoutParams.MATCH_PARENT);
-        knee_surface.setLayoutParams(side_params);
-        main_layout.addView(knee_surface);
-        
-        
+    	running = new Boolean(true);
+    	setContentView(R.layout.activity_main);
+    	super.onCreate(savedInstanceState);
+    	
+    	LinearLayout layout = (LinearLayout)findViewById(R.id.linearLayout);
+    	LinearLayout.LayoutParams surface_view_params =new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT , convertPixelsToDp(1920));
+    	KneeSideSurfaceView surfaceknee = new KneeSideSurfaceView(Main.this);
+    	surfaceknee.setLayoutParams(surface_view_params);
+    	layout.addView(surfaceknee);
+    	
+    	surfaceknee.setRunning(true);
+    	
+    	
+    	
+    	
+   	}
+    
+    
+    private int getScreenHeight(){
+    	WindowManager wm  = (WindowManager)getSystemService(Context.WINDOW_SERVICE);
+    	return wm.getDefaultDisplay().getHeight();
+    	
+    }
+    
+    private int getScreenWidth(){
+    	WindowManager wm  = (WindowManager)getSystemService(Context.WINDOW_SERVICE);
+    	return wm.getDefaultDisplay().getWidth();
+    	
+    }
+    
+    public int convertPixelsToDp(float px){
+        Resources resources = this.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        float dp = px / (metrics.densityDpi / 160f);
+        return (int)dp;
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }

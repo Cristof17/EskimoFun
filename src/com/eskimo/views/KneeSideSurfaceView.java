@@ -106,34 +106,22 @@ public class KneeSideSurfaceView extends SurfaceView implements SurfaceHolder.Ca
 		
 		Paint knee_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		knee_paint.setColor(Color.YELLOW);
-		knee_paint.setStrokeWidth(200);
-		
+		knee_paint.setStrokeWidth(20);
+		knee_paint.setTextSize(100);
 		width = canvas.getWidth();
 		height = canvas.getHeight();
 		
 		//set the joints
-		Point thigh = new Point(100, calculateThighY(canvas.getWidth()/2 ));
-		Point knee = new Point (calculateKneeX(canvas.getWidth()/2), canvas.getHeight()/2 );
-		Point foot = new Point(100 + 30 ,Math.round(canvas.getHeight() - 300 + ((-1)* (0.5f) * (calculateThighY(canvas.getWidth())/2))));
-		
-		
-		canvas.drawCircle(thigh.x ,thigh.y , canvas.getHeight()/canvas.getWidth() * 40, knee_paint);
-		canvas.drawCircle(knee.x , knee.y , canvas.getHeight()/canvas.getWidth() * 40, knee_paint);
-		
-		
-		//set the lines between joints
-		canvas.drawLine(thigh.x, thigh.y,knee.x,knee.y,knee_paint); //line between thigh and knee
-		canvas.drawLine(knee.x , knee.y ,foot.x , foot.y ,knee_paint); //line betweek knee and foot
 		
 		Paint text_paint = new Paint();
 		text_paint.setTextSize(125f);
 		
 		
 				
-		canvas.drawText("X = "+last_x , 50, 100,text_paint);
-		canvas.drawText("Y = "+last_y, 50, 300,text_paint);
-		canvas.drawText("Z = "+last_z, 50, 500,text_paint);
-		canvas.drawText("Offset = " + offset, 50, 700, text_paint);
+//		canvas.drawText("X = "+last_x , 50, 100,text_paint);
+//		canvas.drawText("Y = "+last_y, 50, 300,text_paint);
+//		canvas.drawText("Z = "+last_z, 50, 500,text_paint);
+//		canvas.drawText("Offset = " + offset, 50, 700, text_paint);
 		
 	}
 	
