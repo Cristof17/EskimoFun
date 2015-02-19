@@ -61,7 +61,8 @@ public class RecordActivity extends Activity implements SensorEventListener , On
 		
 		LinearLayout.LayoutParams button_params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
 																		 LinearLayout.LayoutParams.WRAP_CONTENT);
-		button_params.setMargins(100, DisplayMeasurements.convertToDPI(height/2 - recordButton.getHeight(),this) , 100, 100);
+		
+		button_params.setMargins(100,0,100, 100); //margins for the button 
 		
 		LinearLayout.LayoutParams bar_params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
 				 LinearLayout.LayoutParams.WRAP_CONTENT);
